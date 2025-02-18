@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Simple Translation</title>
+</head>
+<body>
+    <div>
+        <h2>
+            Welcome, this is a simple Translation Interface.
+        </h2>
+    </div>
+    <form action="#" th:action="@{/sendTranslation}" th:object="${translation}" method="post">
+        <select th:field="*{targetLanguage}">
+            <option th:value="en" th:text="English"></option>
+            <option th:value="zh-CN" th:text="Chinese-Simplified"></option>
+            <option th:value="es" th:text="Spanish"></option>
+        </select>
+        <p>Text to translate: <input type="text" th:field="*{input}" /></p>
+        <p><input type="submit" value="Submit" /> <input type="reset" value="Reset" /></p>
+    </form>
+    <p th:if="${translationText != null}">
+        Translation: <span th:text="${translationText}"></span>
+    </p>
+</body>
+</html>
