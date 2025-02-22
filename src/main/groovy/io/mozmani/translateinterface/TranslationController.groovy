@@ -32,11 +32,16 @@ class TranslationController {
 
     private TranslationResponse translateRequest(Translation translation) {
         String uri = "https://translate.googleapis.com/translate_a/single?client=gtx&sl=auto&tl=${translation.targetLanguage}&dt=t&q="
+        translation.input = translation.input.replace('"', '')
         uri += translation.input
         ResponseEntity<String> res = restTemplate.getForEntity(uri, String.class)
-        String[] rawScrape = res.body.split(',')
-        String output = rawScrape[0].replace('[', '')
-        String lang = rawScrape[12]
+        String[] rawScrape = res.body.split('"')
+        rawScrape.each {
+            log.info(it as String)
+        }
+        String output = rawScrape[1]
+        int targetLangIdx = (rawScrape.length - 2)
+        String lang = rawScrape[targetLangIdx]
 
         return new TranslationResponse(output: output, originLang: lang)
     }

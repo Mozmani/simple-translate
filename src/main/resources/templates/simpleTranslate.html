@@ -5,22 +5,39 @@
     <title>Simple Translation</title>
 </head>
 <body>
-    <div>
-        <h2>
-            Welcome, this is a simple Translation Interface.
-        </h2>
+    <div class="main-box">
+        <div>
+            <h2>
+                Welcome, this is a simple Translation Interface.
+            </h2>
+        </div>
+        <form action="#" th:action="@{/sendTranslation}" th:object="${translation}" method="post">
+            <select th:field="*{targetLanguage}">
+                <option th:value="en" th:text="English"></option>
+                <option th:value="zh-CN" th:text="Chinese-Simplified"></option>
+                <option th:value="es" th:text="Spanish"></option>
+                <option th:value="th" th:text="Thai"></option>
+                <option th:value="ru" th:text="Russian"></option>
+                <option th:value="ko" th:text="Korean"></option>
+                <option th:value="de" th:text="German"></option>
+                <option th:value="fr" th:text="French"></option>
+            </select>
+            <p>Text to translate: <input type="text" th:field="*{input}" /></p>
+            <p><input type="submit" value="Submit" /> <input type="reset" value="Reset" /></p>
+        </form>
+        <p th:if="${translationText != null}">
+            Translation: <span th:text="${translationText}"></span>
+            <br> <br>
+            Origin Lang Code: <span th:text="${origin}"></span>
+        </p>
     </div>
-    <form action="#" th:action="@{/sendTranslation}" th:object="${translation}" method="post">
-        <select th:field="*{targetLanguage}">
-            <option th:value="en" th:text="English"></option>
-            <option th:value="zh-CN" th:text="Chinese-Simplified"></option>
-            <option th:value="es" th:text="Spanish"></option>
-        </select>
-        <p>Text to translate: <input type="text" th:field="*{input}" /></p>
-        <p><input type="submit" value="Submit" /> <input type="reset" value="Reset" /></p>
-    </form>
-    <p th:if="${translationText != null}">
-        Translation: <span th:text="${translationText}"></span>
-    </p>
 </body>
+<style>
+    .main-box {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-top: 2em;
+    }
+</style>
 </html>
